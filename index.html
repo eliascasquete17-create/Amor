@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Valentín 💖</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#fde2e4,#faedcd,#f8d7da);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+.contenedor{
+  width:90%;
+  max-width:400px;
+  background:#fff;
+  border-radius:25px;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.pantalla{display:none;}
+.activa{display:block;}
+
+h1{color:#9d0208;}
+p{color:#6a040f;}
+
+button{
+  background:#ff758f;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  margin:8px;
+  border-radius:18px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.emoji{font-size:80px;margin:15px 0;}
+.mensaje-error{color:#d00000;font-size:16px;margin-top:10px;}
+
+.flower{font-size:30px;}
+
+.confetti{
+  position:fixed;
+  font-size:24px;
+  animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="sound" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2a6c7b0b0c.mp3">
+</audio>
+
+<div class="contenedor">
+
+<!-- P1 -->
+<div class="pantalla activa" id="p1">
+  <div class="flower">🌷🌸🌹</div>
+  <h1>¿Estás libre este fin de semana? 😏</h1>
+  <div class="emoji">🙂‍↕️</div>
+  <button onclick="error()">No</button>
+  <button onclick="error()">No sé</button>
+  <button onclick="next('p1','p2')">Sí, pero solo para uno</button>
+  <div id="e1" class="mensaje-error"></div>
+</div>
+
+<!-- P2 -->
+<div class="pantalla" id="p2">
+  <h1>-_- ¿Quién es “UNO”?</h1>
+  <div class="emoji">😏</div>
+  <button onclick="error()">Elías</button>
+  <button onclick="error()">Mi bebé</button>
+  <button onclick="next('p2','p3')">Mi todo</button>
+  <div id="e2" class="mensaje-error"></div>
+</div>
+
+<!-- P3 -->
+<div class="pantalla" id="p3">
+  <h1>QUIÉN ES MI TODO</h1>
+  <div class="emoji">😼</div>
+  <button onclick="next('p3','p4')">Tú</button>
+</div>
+
+<!-- Polo Norte -->
+<div class="pantalla" id="p4">
+  <h1>Bueno… cambiémoslo 😏</h1>
+  <div class="emoji">🎅❄️</div>
+  <p>Nos vamos al Polo Norte<br>JO JO JO JO</p>
+  <button onclick="next('p4','p5')">❄️</button>
+</div>
+
+<div class="pantalla" id="p5">
+  <h1>😹😹</h1>
+  <p>Te la creíste beibi</p>
+  <button onclick="next('p5','p6')">Ok no 😹</button>
+</div>
+
+<!-- Ojos -->
+<div class="pantalla" id="p6">
+  <h1>Ahora sí…</h1>
+  <div>
+    <span class="emoji ojo" onclick="hideEye(this)">👀</span>
+    <span class="emoji ojo" onclick="hideEye(this)">👀</span>
+    <span class="emoji ojo" onclick="hideEye(this)">👀</span>
+    <span class="emoji ojo" onclick="hideEye(this)">👀</span>
+  </div>
+</div>
+
+<!-- Final -->
+<div class="pantalla" id="p7">
+  <h1>¡AGARRA TUS MALETAS!</h1>
+  <div class="emoji">💖💕❤️‍🔥</div>
+  <h1>🌄 BAÑOS DE AGUA SANTA 🌄</h1>
+  <p>¡BAÑOS NOS ESPERA!</p>
+</div>
+
+</div>
+
+<script>
+const errores=[
+ "Revisa bien tu respuesta 😡",
+ "Creo que no quisiste elegir esa 🤡",
+ "Pulsaste mal 🙈",
+ "Eso no le gusta a diosito 🥺",
+ "Concéntrate pues 😔"
+];
+
+function error(){
+  const e=document.querySelector(".activa .mensaje-error");
+  e.innerText=errores.shift() || "No más errores 😡";
+}
+
+function next(a,b){
+  document.getElementById(a).classList.remove("activa");
+  document.getElementById(b).classList.add("activa");
+  document.getElementById("sound").play();
+}
+
+let ojos=4;
+function hideEye(el){
+  el.style.display="none";
+  ojos--;
+  if(ojos===0){
+    next('p6','p7');
+    confetti();
+  }
+}
+
+function confetti(){
+  for(let i=0;i<40;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.innerHTML=Math.random()>0.5?"🎉":"💖";
+    c.style.left=Math.random()*100+"vw";
+    c.style.animationDuration=(2+Math.random()*3)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+</script>
+
+</body>
+  </html>
